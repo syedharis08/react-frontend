@@ -6,7 +6,7 @@ import ErrorMessgae from './ErrorMessage'
 
 const CustomRadioButtons = ({
   name,
-  customValue,
+  value,
   setCheckAll,
   checked,
   title,
@@ -21,11 +21,11 @@ const CustomRadioButtons = ({
       <Label check>
         <Input
           onChange={(event) => {
-            handleChange(name)(customValue ? customValue : event.target.value)
+            handleChange(name)(value ? value : event.target.value)
             onChangeText(event)
-            setCheckAll(customValue)
+            setCheckAll(value)
           }}
-          customValue='all'
+          value='all'
           checked={checked}
           onBlur={() => setFieldTouched(name)}
           {...otherProps}

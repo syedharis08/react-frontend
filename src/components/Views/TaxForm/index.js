@@ -16,6 +16,8 @@ import ApiCall from '../../../service/network'
 import urlConstant from '../../../service/urls'
 import CheckBoxView from './CheckBoxView'
 import { AppFormField, AppForm, RadioButtons, SubmitButton } from '../../Form'
+import { toast, ToastContainer } from 'react-toastify'
+import Flex from '../../shared-components/Flex'
 
 export default function TaxForm() {
   const [itemData, setItemData] = useState([])
@@ -33,7 +35,7 @@ export default function TaxForm() {
 
   const validationSchema = Yup.object({
     taxInNumber: Yup.number().required('Required').max(100),
-    appliedTo: Yup.string().required('Required'),
+    appliedTo: Yup.string().required('One of these checkbox should be checked'),
   })
 
   useEffect(() => {
@@ -67,13 +69,22 @@ export default function TaxForm() {
 
   const handleSubmit = async (value) => {
     let obj = {
-      applicableItems: checkedItems,
+      applicableItems:checkedItems,
       appliedTo: value.appliedTo,
       name: taxInWords,
       rate: parseInt(value.taxInNumber) / 100,
     }
 
+    if(checkedItems.length === 0){
+      toast.error("Select items to add tax")
+      return
+    }
     const response = await ApiCall.post(urlConstant.SET_TAX, obj)
+    if(response.ok ){
+      return toast.success("Items updated successfully")
+    }else{
+      return toast.error(response.data.message[0])
+    }
   }
 
   const getItems = async () => {
@@ -81,10 +92,11 @@ export default function TaxForm() {
     let withoutParent = { name: '', id: -1, items: [] }
     const response = await ApiCall.get(urlConstant.GET_ITEMS)
     if (!response.ok) {
-      return console.log('error')
+      return toast.error(response?.data?.message[0])
+
     }
 
-    response.data.map((item) => {
+    response?.data?.map((item) => {
       if (!item.parent_id) {
         withoutParent = {
           ...withoutParent,
@@ -136,7 +148,7 @@ export default function TaxForm() {
         <h3>Add Tax</h3>
         <Row>
           <Col md={6}>
-            <AppFormField disabled value={taxInWords} placeholder='Enter Tax in words' />
+            <AppFormField disabled value={taxInWords} placeholder='Tax in words' />
           </Col>
           <Col md={3}>
             <InputGroup>
@@ -155,7 +167,7 @@ export default function TaxForm() {
             <RadioButtons
               name='appliedTo'
               type='radio'
-              customValue='all'
+              value='all'
               onChangeText={checkAllCategory}
               setCheckAll={setCheckAll}
               checked={checkAll === 'all'}
@@ -165,7 +177,7 @@ export default function TaxForm() {
             <RadioButtons
               name='appliedTo'
               type='radio'
-              customValue='some'
+              value='some'
               setCheckAll={setCheckAll}
               checked={checkAll === 'some'}
               title={'Apply to specific items'}
@@ -187,7 +199,7 @@ export default function TaxForm() {
         </Row>
         {itemData.map((singleItem, index) => {
           return (
-            <div key={index} className='mt-1'>
+            <Flex key={index} className='mt-1'>
               <CheckBoxView
                 data={singleItem}
                 checkedItems={checkedItems}
@@ -197,16 +209,21 @@ export default function TaxForm() {
                 appliedTo={checkAll}
                 search={search}
               />
-            </div>
+            </Flex>
           )
         })}
-        <hr />
-        <div className='d-flex justify-content-end'>
+        
+      </Container>
+      <hr />
+      <Container>
+
+        <Flex justifyContent={"end"}>
           <SubmitButton
             title={`Apply Tax to ${checkedItems?.length} item(s)`}
           />
-        </div>
+        </Flex>
       </Container>
+      <ToastContainer autoClose={2000} />
     </AppForm>
   )
 }

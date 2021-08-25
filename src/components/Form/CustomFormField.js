@@ -4,6 +4,7 @@ import { Input } from 'reactstrap'
 import { ToWords } from 'to-words'
 
 import ErrorMessgae from './ErrorMessage'
+import Flex from '../shared-components/Flex'
 
 const AppFormField = ({
   name,
@@ -20,7 +21,7 @@ const AppFormField = ({
 
   return (
     <>
-      <div className='d-flex flex-column'>
+      <Flex flexDirection={"column"}>
         <Input
           onChange={(event) => {
             handleChange(name)(customValue ? customValue : event.target.value)
@@ -36,7 +37,7 @@ const AppFormField = ({
           {...otherProps}
         />
         <ErrorMessgae error={errors[name]} visible={touched[name]} />
-      </div>
+      </Flex>
     </>
   )
 }

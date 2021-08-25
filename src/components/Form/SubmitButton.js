@@ -4,7 +4,7 @@ import { Button } from 'reactstrap'
 
 const SubmitButton = ({ title }) => {
   const { handleSubmit } = useFormikContext()
-  return <Button onClick={handleSubmit}>{title}</Button>
+  return <Button  onClick={handleSubmit}>{title}</Button>
 }
 
 export default SubmitButton

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Col, Container, Input, Label, Row } from 'reactstrap'
+import Flex from '../../shared-components/Flex'
 const CheckBoxView = ({
   data,
   checkedItems,
@@ -18,7 +19,7 @@ const CheckBoxView = ({
 
     return filteredData.map((singleItem, index) => {
       return (
-        <div key={index} className='m-xl-3'>
+        <Flex key={index} className='m-xl-3'>
           <Row>
             <Col md={12}>
               <Label check>
@@ -42,7 +43,7 @@ const CheckBoxView = ({
               </Label>
             </Col>
           </Row>
-        </div>
+        </Flex>
       )
     })
   }
