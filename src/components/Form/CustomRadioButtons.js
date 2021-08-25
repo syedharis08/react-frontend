@@ -4,7 +4,7 @@ import { Input, Label } from 'reactstrap'
 
 import ErrorMessgae from './ErrorMessage'
 
-const RadioButtons = ({
+const CustomRadioButtons = ({
   name,
   customValue,
   setCheckAll,
@@ -38,4 +38,4 @@ const RadioButtons = ({
   )
 }
 
-export default RadioButtons
+export default CustomRadioButtons

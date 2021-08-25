@@ -121,15 +121,7 @@ export default function TaxForm() {
         }
       }
     })
-    {
-      /* <Formik
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
-          setSubmitting(false)
-        }, 400)
-      }} */
-    }
+    
 
     setItemData(withParentCategory.concat(withoutParent))
   }
@@ -144,7 +136,7 @@ export default function TaxForm() {
         <h3>Add Tax</h3>
         <Row>
           <Col md={6}>
-            <AppFormField value={taxInWords} placeholder='Enter Tax in words' />
+            <AppFormField disabled value={taxInWords} placeholder='Enter Tax in words' />
           </Col>
           <Col md={3}>
             <InputGroup>
