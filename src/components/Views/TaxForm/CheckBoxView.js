@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Input, Label, Row } from 'reactstrap'
+import { Col, Input, Label, Row } from 'reactstrap'
 import Flex from '../../shared-components/Flex'
 const CheckBoxView = ({
   data,

@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Label,
-  Button,
-} from 'reactstrap'
+import { Container, Row, Col, Input, InputGroup } from 'reactstrap'
 
 import * as Yup from 'yup'
 
@@ -69,20 +60,20 @@ export default function TaxForm() {
 
   const handleSubmit = async (value) => {
     let obj = {
-      applicableItems:checkedItems,
+      applicableItems: checkedItems,
       appliedTo: value.appliedTo,
       name: taxInWords,
       rate: parseInt(value.taxInNumber) / 100,
     }
 
-    if(checkedItems.length === 0){
-      toast.error("Select items to add tax")
+    if (checkedItems.length === 0) {
+      toast.error('Select items to add tax')
       return
     }
     const response = await ApiCall.post(urlConstant.SET_TAX, obj)
-    if(response.ok ){
-      return toast.success("Items updated successfully")
-    }else{
+    if (response.ok) {
+      return toast.success('Items updated successfully')
+    } else {
       return toast.error(response.data.message[0])
     }
   }
@@ -93,7 +84,6 @@ export default function TaxForm() {
     const response = await ApiCall.get(urlConstant.GET_ITEMS)
     if (!response.ok) {
       return toast.error(response?.data?.message[0])
-
     }
 
     response?.data?.map((item) => {
@@ -133,7 +123,6 @@ export default function TaxForm() {
         }
       }
     })
-    
 
     setItemData(withParentCategory.concat(withoutParent))
   }
@@ -148,7 +137,11 @@ export default function TaxForm() {
         <h3>Add Tax</h3>
         <Row>
           <Col md={6}>
-            <AppFormField disabled value={taxInWords} placeholder='Tax in words' />
+            <AppFormField
+              disabled
+              value={taxInWords}
+              placeholder='Tax in words'
+            />
           </Col>
           <Col md={3}>
             <InputGroup>
@@ -212,12 +205,10 @@ export default function TaxForm() {
             </Flex>
           )
         })}
-        
       </Container>
       <hr />
       <Container>
-
-        <Flex justifyContent={"end"}>
+        <Flex className='d-flex justify-content-end'>
           <SubmitButton
             title={`Apply Tax to ${checkedItems?.length} item(s)`}
           />

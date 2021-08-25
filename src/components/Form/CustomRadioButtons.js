@@ -13,8 +13,7 @@ const CustomRadioButtons = ({
   onChangeText = () => {},
   ...otherProps
 }) => {
-  const { setFieldTouched, handleChange, errors, touched, values } =
-    useFormikContext()
+  const { setFieldTouched, handleChange, errors, touched } = useFormikContext()
 
   return (
     <>
